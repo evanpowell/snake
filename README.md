@@ -3,8 +3,12 @@ The classic snake game, with some additional features:
 
 - three settings for speed
 - optional wall setting
-- leaderboards fot the top 5 scores for each setting variation
+- leaderboards for the top 5 scores for each setting variation
 - customizable color themes
+
+### Tech Stack
+
+Snake is a single page application with a **React** front-end, **Node/Express** back-end, and a **MongoDB** database.
 
 ### Setup
 
