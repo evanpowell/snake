@@ -1,7 +1,8 @@
 const TOGGLE_WALL = 'TOGGLE_WALL';
 const CHANGE_SPEED = 'CHANGE_SPEED';
-const CHANGE_SPEED = 'CHANGE_SPEED';
 const CHANGE_COLORS = 'CHANGE_COLORS';
+const UPDATE_CANVAS = 'UPDATE_CANVAS';
+const UPDATE_CONTEXT = 'UPDATE_CONTEXT';
 
 const initialState = {
   highScores: {
@@ -13,8 +14,10 @@ const initialState = {
     snake: '#0bdd1d',
     food: '#e00606',
     screen: '#111',
+    wall: '#cecece',
     background: '#111'
-  }
+  },
+  canvas: null
 };
 
 export default (state = initialState, { type, payload }) => {
@@ -24,10 +27,16 @@ export default (state = initialState, { type, payload }) => {
     return { ...state, isWall: !state.isWall };
 
   case CHANGE_SPEED:
-    return { ...state, ...payload };
+    return { ...state, speed: payload };
 
   case CHANGE_COLORS:
     return { ...state, colors: { ...this.state.colors, ...payload }};
+
+  case UPDATE_CANVAS:
+    return { ...state, canvas: payload };
+
+  case UPDATE_CONTEXT:
+    return { ...state, context: payload};
 
   default:
     return state;
