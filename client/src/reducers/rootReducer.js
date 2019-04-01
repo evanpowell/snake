@@ -13,6 +13,7 @@ const initialState = {
   colors: {
     snake: '#0bdd1d',
     food: '#e00606',
+    text: '#cecece',
     screen: '#111',
     wall: '#cecece',
     background: '#111'
