@@ -30,15 +30,17 @@ export class Title extends Component {
             style={{ backgroundColor: this.props.focusColor, display: this.state.focusedOption === 'start' ? 'inline-block' : 'none' }}
           ></div>
 
-          <Link
-            to="/game"
-            className="title--menu option__text"
-            id="start"
-            style={{ color: this.props.menuColor }}
-            onFocus={this.handleFocus}
-          >
-            Start
-          </Link>
+          <h2>
+            <Link
+              to="/game"
+              className="title--menu option__text"
+              id="start"
+              style={{ color: this.props.menuColor }}
+              onFocus={this.handleFocus}
+            >
+              Start
+            </Link>
+          </h2>
 
           <div
             className="option__active option__active--right"
@@ -54,15 +56,17 @@ export class Title extends Component {
           style={{ backgroundColor: this.props.focusColor, display: this.state.focusedOption === 'settings' ? 'inline-block' : 'none' }}
           ></div>
           
-          <Link
-            to="/settings"
-            className="title--menu option__text"
-            id="settings"
-            style={{ color: this.props.menuColor }}
-            onFocus={this.handleFocus}
-          >
-            Settings
-          </Link>
+          <h2>
+            <Link
+              to="/settings"
+              className="title--menu option__text"
+              id="settings"
+              style={{ color: this.props.menuColor }}
+              onFocus={this.handleFocus}
+            >
+              Settings
+            </Link>
+          </h2>
 
           <div
             className="option__active option__active--right"
