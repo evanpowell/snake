@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
+import { upKeys, downKeys } from '../../constants/directionalKeys';
+
 export class Title extends Component {
   state = {
     focusedOption: null
@@ -9,12 +11,25 @@ export class Title extends Component {
 
   componentDidMount() {
     document.getElementById('start').focus();
+    document.body.addEventListener('keydown', this.handleKeyDown);
+  }
+
+  componentWillUnmount() {
+    document.body.removeEventListener('keydown', this.handleKeyDown);
   }
 
   handleFocus = (event) => {
     this.setState({
       focusedOption: event.target.id
     });
+  }
+
+  handleKeyDown = ({ key }) => {
+    if (downKeys[key] && this.state.focusedOption === 'start') {
+      document.getElementById('settings').focus();
+    } else if (upKeys[key] && this.state.focusedOption === 'settings') {
+      document.getElementById('start').focus();
+    }
   }
 
   render() {
