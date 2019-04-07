@@ -111,6 +111,10 @@ h3 {
 }
 
 .option {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
   &__label {
     display: flex;
@@ -129,6 +133,16 @@ h3 {
 
     &--right {
       margin-left: 1rem;
+    }
+  }
+
+  &__select {
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+
+    &--input {
+      padding: .7rem;
     }
   }
 }
