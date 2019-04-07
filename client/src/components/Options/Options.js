@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
+import { upKeys, downKeys } from '../../constants/directionalKeys';
+
 export class Options extends Component {
   state = {
     focusedOption: null
@@ -9,6 +11,36 @@ export class Options extends Component {
 
   componentDidMount() {
     document.getElementById('gameplay').focus();
+    document.body.addEventListener('keydown', this.handleKeyDown);
+  }
+
+  componentWillUnmount() {
+    document.body.removeEventListener('keydown', this.handleKeyDown);
+  }
+
+  handleKeyDown = ({ key }) => {
+    switch (this.state.focusedOption) {
+      case 'gameplay': {
+        if (downKeys[key]) {
+          document.getElementById('display').focus();
+        }
+        break;
+      }
+      case 'display': {
+        if (upKeys[key]) {
+          document.getElementById('gameplay').focus();
+        } else if (downKeys[key]) {
+          document.getElementById('back').focus();
+        }
+        break;
+      }
+      default: {
+        if (upKeys[key]) {
+          document.getElementById('display').focus();
+        }
+        break;
+      }
+    }
   }
 
   handleFocus = (event) => {
