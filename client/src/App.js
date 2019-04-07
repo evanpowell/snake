@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import Title from './components/Title/Title';
 import Options from './components/Options/Options';
+import Gameplay from './components/Options/Gameplay/Gameplay';
 
 export class App extends Component {
   componentDidMount() {
@@ -31,6 +32,7 @@ export class App extends Component {
                 <Switch>
                   <Route path="/" exact component={Title}></Route>
                   <Route path="/settings" exact component={Options}></Route>
+                  <Route path="/settings/gameplay" exact component={Gameplay}></Route>
                 </Switch>
               </Router>
             </div>
