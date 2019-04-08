@@ -13,9 +13,9 @@ export const colorSchemes = {
   gameboy: {
     colorScheme: 'gameboy',
     colors: {
-      snake: '#5a3921',
-      food: '#6b8c42',
-      text: '#6b8c42',
+      snake: '#6b8c42',
+      food: '#5a3921',
+      text: '#7bc67b',
       screen: '#ffffb5',
       wall: '#6d6a75',
       background: '#e2e3dd'
