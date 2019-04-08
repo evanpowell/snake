@@ -28,12 +28,16 @@ export class Display extends Component {
   handleKeydown = ({ key }) => {
     switch (this.state.focusedOption) {
       case 'color-scheme': {
-        if (this.props.colorScheme === 'normal' && rightKeys[key]) {
-          this.props.updateColorScheme(colorSchemes.gameboy);
-        } else if (this.props.colorScheme === 'gameboy') {
-          if (leftKeys[key]) {
+        if (rightKeys[key]) {
+          if (this.props.colorScheme === 'normal') {
+            this.props.updateColorScheme(colorSchemes.gameboy);
+          }
+        } else if (leftKeys[key]) {
+          if (this.props.colorScheme === 'gameboy') {
             this.props.updateColorScheme(colorSchemes.normal);
           }
+        } else if (downKeys[key]) {
+          document.getElementById('back').focus();
         }
         break;
       }
@@ -105,6 +109,36 @@ export class Display extends Component {
               <div className="option__select--input" style={this.props.colorScheme === 'gameboy' ? selectedStyle : {}}>
                 GameBoy
               </div>
+
+            </div>
+
+          </div>
+
+          <div className="option" style={{ color: this.props.textColor }}>
+
+            <div className="option__label mb-4">
+
+              <div 
+                className="option__active option__active--left"
+                style={{ backgroundColor: this.props.focusColor, display: this.state.focusedOption === 'back' ? 'inline-block' : 'none' }}
+              ></div>
+
+              <h2>
+                <Link
+                  to="/settings"
+                  className="router-link option__text"
+                  id="back"
+                  style={{ color: this.props.textColor }}
+                  onFocus={this.handleFocus}
+                >
+                  Back
+                </Link>
+              </h2>
+
+              <div
+                className="option__active option__active--right"
+                style={{ backgroundColor: this.props.focusColor, display: this.state.focusedOption === 'back' ? 'inline-block' : 'none' }}
+              ></div>
 
             </div>
 
