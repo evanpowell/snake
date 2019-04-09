@@ -3,6 +3,8 @@ const CHANGE_SPEED = 'CHANGE_SPEED';
 const CHANGE_COLORS = 'CHANGE_COLORS';
 const UPDATE_CANVAS = 'UPDATE_CANVAS';
 const UPDATE_CONTEXT = 'UPDATE_CONTEXT';
+const INCREASE_SCORE = 'INCREASE_SCORE';
+const RESET_SCORE = 'RESET_SCORE';
 
 const initialState = {
   highScores: {
@@ -20,6 +22,8 @@ const initialState = {
   },
   colorScheme: 'normal',
   canvas: null,
+  context: null,
+  score: 0
 };
 
 export default (state = initialState, { type, payload }) => {
@@ -37,8 +41,11 @@ export default (state = initialState, { type, payload }) => {
   case UPDATE_CANVAS:
     return { ...state, canvas: payload };
 
-  case UPDATE_CONTEXT:
-    return { ...state, context: payload};
+  case INCREASE_SCORE:
+    return { ...state, score: state.score + 1};
+
+  case RESET_SCORE:
+    return { ...state, score: 0};
 
   default:
     return state;

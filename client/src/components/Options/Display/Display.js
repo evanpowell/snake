@@ -15,12 +15,6 @@ export class Display extends Component {
     document.body.addEventListener('keydown', this.handleKeydown);
   }
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.screenColor !== this.props.screenColor) {
-      this.updateScreenColor();
-    }
-  }
-
   componentWillUnmount() {
     document.body.removeEventListener('keydown', this.handleKeydown);
   }
@@ -53,12 +47,6 @@ export class Display extends Component {
     this.setState({
       focusedOption: event.target.id
     });
-  }
-
-  updateScreenColor = () => {
-    let ctx = this.props.canvas.getContext('2d');
-    ctx.fillStyle = this.props.screenColor;
-    ctx.fillRect(0, 0, this.props.canvas.width, this.props.canvas.height);
   }
 
   render() {
@@ -156,7 +144,7 @@ const mapStateToProps = (state) => ({
   screenColor: state.colors.screen,
   textColor: state.colors.text,
   focusColor: state.colors.food,
-  canvas: state.canvas
+  fullLength: state.canvas.width,
 });
 
 const mapDispatchToProps = {

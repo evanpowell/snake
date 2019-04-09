@@ -6,6 +6,7 @@ import Title from './components/Title/Title';
 import Options from './components/Options/Options';
 import Gameplay from './components/Options/Gameplay/Gameplay';
 import Display from './components/Options/Display/Display';
+import Game from './components/Game/Game';
 
 export class App extends Component {
   componentDidMount() {
@@ -13,14 +14,8 @@ export class App extends Component {
     canvas.width = canvas.offsetWidth;
     canvas.height = canvas.offsetHeight;
     canvas.tabIndex = 0;
-    
-    const ctx = canvas.getContext('2d');
-    ctx.fillStyle = this.props.colors.screen;
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.beginPath();
 
     this.props.updateCanvas(canvas);
-    this.props.updateContext(ctx);
   }
 
   render() {
@@ -31,14 +26,15 @@ export class App extends Component {
             <div className="screen__inner h-100">
               <Router>
                 <Switch>
-                  <Route path="/" exact component={Title}></Route>
-                  <Route path="/settings" exact component={Options}></Route>
-                  <Route path="/settings/gameplay" component={Gameplay}></Route>
-                  <Route path="/settings/display" component={Display}></Route>
+                  <Route path="/" exact component={Title} />
+                  <Route path="/game" exact component={Game} />
+                  <Route path="/settings" exact component={Options} />
+                  <Route path="/settings/gameplay" component={Gameplay} />
+                  <Route path="/settings/display" component={Display} />
                 </Switch>
               </Router>
             </div>
-            <canvas id="canvas"></canvas>
+            <canvas id="canvas" style={{ backgroundColor: this.props.colors.screen }}></canvas>
           </div>
         </div>
       </div>
@@ -55,7 +51,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     updateCanvas: (canvas) => { dispatch({ type: 'UPDATE_CANVAS', payload: canvas })},
-    updateContext: (context) => { dispatch({ type: 'UPDATE_CONTEXT', payload: context })}
   };
 };
 
