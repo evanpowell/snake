@@ -1,16 +1,17 @@
 import { Snake } from './Snake';
 import { Food } from './Food';
 
-export class GameLogic {
-  contructor(props) {
+export class GameRunner {
+  constructor(config) {
     this.lengthInBlocks = 40
-    this.isWall = props.isWall;
-    this.fullLength = props.canvas.width;
-    this.blockSize = props.canvas.width / this.lengthInBlocks - 2; // Detract 1 pixel from each side for pixel padding
-    this.speedInterval = [150, 100, 50][props.speed - 1];
-    this.snakeColor = props.snakeColor;
-    this.foodColor = props.foodColor;
-    this.ctx = props.canvas.getContext('2d');
+    this.isWall = config.isWall;
+    this.fullLength = config.canvas.width;
+    this.blockSize = (config.canvas.width / this.lengthInBlocks) - 2; // Detract 1 pixel from each side for pixel padding
+    this.speedInterval = [150, 100, 50][config.speed - 1];
+    this.snakeColor = config.snakeColor;
+    this.foodColor = config.foodColor;
+    this.ctx = config.canvas.getContext('2d');
+    this.incScore = config.incScore;
     this.snake = null;
     this.food = null;
   }
@@ -22,15 +23,88 @@ export class GameLogic {
     this.food = new Food();
     this.placeFood(true);
 
-    // add event listener for keydown
-    // initiate mainloop
+    document.addEventListener('keydown', this.snake.handleDirectionKeyDown);
+
+    this.runMainLoop();
+  }
+
+  runMainLoop = () => {
+    this.snake.updateDirection();
+    this.snake.advanceHead();
+
+    if (!this.isWall) {
+      this.moveHeadToOppositeWallConditionally();
+    } else if (this.isWallCollision()) {
+      this.endGame();
+      return;
+    }
+
+    if (this.isSelfCollision()) {
+      this.endGame();
+      return;
+    }
+
+    if (this.doesSnakeEatFood()) {
+      this.incScore();
+      this.placeFood();
+    } else {
+      this.clearBlock(this.snake.popTail())
+    }
+
+    this.renderSnakeBlock(this.snake.blocks.head);
+    
+    setTimeout(() => {
+      this.runMainLoop();
+    }, this.speedInterval);
+  }
+
+  isWallCollision = () => {
+    const { x, y } = this.snake.blocks.head;
+
+    return x < 0 || x >= this.lengthInBlocks || y < 0 || y >= this.lengthInBlocks;
+  }
+
+  isSelfCollision = () => {
+    const { head } =  this.snake.blocks;
+
+    // The head can only collide with blocks it can turn to face (4 blocks from itself)
+    let block = this.snake.blocks.head.prev.prev.prev.prev;
+
+    while (block) {
+
+      if (this.areSameCoordinates(block, head)) {
+        return true;
+      }
+
+      block = block.prev;
+    }
+
+    return false;
+  }
+
+  doesSnakeEatFood = () => {
+    return this.areSameCoordinates(this.snake.blocks.head, this.food.currentBlock);
+  }
+
+  moveHeadToOppositeWallConditionally = () => {
+    const { head } = this.snake.blocks;
+
+    if (head.x < 0) {
+      head.x += this.lengthInBlocks;
+    } else if (head.y < 0) {
+      head.y += this.lengthInBlocks;
+    } else if (head.x >= this.lengthInBlocks) {
+      head.x -= this.lengthInBlocks;
+    } else if (head.y >= this.lengthInBlocks) {
+      head.y -= this.lengthInBlocks;
+    }
   }
 
   renderSnakeInit = () => {
     let snakeBlock = this.snake.blocks.head;
 
     while(snakeBlock) {
-      this.renderSnakeBlock(block);
+      this.renderSnakeBlock(snakeBlock);
       
       snakeBlock = snakeBlock.prev;
     }
@@ -70,7 +144,7 @@ export class GameLogic {
   placeFood = (isInit) => {
     let randomBlock = this.generateRandomBlockCoordinates();
 
-    while (!isFoodPlaceable(randomBlock)) {
+    while (!this.isFoodPlaceable(randomBlock)) {
       randomBlock = this.generateRandomBlockCoordinates();
     }
 
@@ -87,7 +161,7 @@ export class GameLogic {
     let snakeBlock = this.snake.blocks.head;
 
     while (snakeBlock) {
-      if (areSameCoordinates(block, snakeBlock)) {
+      if (this.areSameCoordinates(block, snakeBlock)) {
         return false;
       }
 
@@ -108,8 +182,8 @@ export class GameLogic {
 
   getTrueCoordinates = (block) => {
     return {
-      x: block.x * blockSize + 1,
-      y: block.y * blockSize + 1
+      x: block.x * (this.blockSize + 2) + 1,
+      y: block.y * (this.blockSize + 2) + 1
     };
   }
 
@@ -130,5 +204,9 @@ export class GameLogic {
     
     // clear the block plus the surrounding pixel padding
     this.ctx.clearRect(trueCoordinates.x - 2, trueCoordinates.y - 2, this.blockSize + 4, this.blockSize + 4);
+  }
+
+  endGame = () => {
+
   }
 }

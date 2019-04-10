@@ -1,25 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { upKeys, downKeys, leftKeys, rightKeys } from '../../constants/directionalKeys';
+import { GameRunner } from '../../gameLogic/index';
 
 export class Game extends Component {
   state = {
 
   }
 
-  componentWillMount() {
-    
-  }
-
-  startGame = () => {
-    this.props.resetScore();
-
-  }
-
-  fillScreen = () => {
-    this.props.ctx.fillStyle = this.props.screenColor;
-    this.props.ctx.fill(0, 0, this.props.fullLength, this.props.fullLength);
+  componentDidMount() {
+    const gameRunner = new GameRunner(this.props);
+    console.log(gameRunner);
+    gameRunner.init();
   }
 
   renderBlock = ({ x, y, width, height }, color) => {
@@ -34,7 +26,7 @@ export class Game extends Component {
   render() {
     return (
       <div>
-        Game Component
+        
       </div>
     )
   }
@@ -48,11 +40,11 @@ const mapStateToProps = (state) => ({
   screenColor: state.colors.screen,
   foodColor: state.colors.food,
   canvas: state.canvas,
-})
+});
 
 const mapDispatchToProps = {
   incScore: () => ({ type: 'INCREASE_SCORE', payload: null }),
   resetScore: () => ({ type: 'RESET_SCORE', payload: null })
-}
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(Game)
+export default connect(mapStateToProps, mapDispatchToProps)(Game);

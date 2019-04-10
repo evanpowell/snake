@@ -1,4 +1,4 @@
-import { upKeys, downKeys, leftKeys, rightKeys } from '../../constants/directionalKeys';
+import { upKeys, downKeys, leftKeys, rightKeys } from '../constants/directionalKeys';
 
 export class SnakeBlock {
   constructor (x, y, direction) {
@@ -45,8 +45,12 @@ export class SnakeBlockList {
   }
 
   advanceTail = () => {
+    const previousTail = this.tail;
+
     this.tail = this.tail.next;
     this.tail.prev = null;
+
+    return previousTail;
   }
 }
 
@@ -63,15 +67,14 @@ export class Snake {
     this.blocks.tail = this.blocks.head;
     for (let x = 0; x < 4; x++) {
       this.blocks.advanceHead('R');
-      this.renderInitial();
     }
   }
 
-  handleDirectionKeyDown = (key) => {
+  handleDirectionKeyDown = ({ key }) => {
     if (upKeys[key] && this.direction !== 'D') {
       this.nextDirection = 'U';
     } else if (rightKeys[key] && this.direction !== 'L') {
-      this.nextDirection = 'U';
+      this.nextDirection = 'R';
     } else if (downKeys[key] && this.direction !== 'U') {
       this.nextDirection = 'D';
     } else if (leftKeys[key] && this.direction !== 'R') {
@@ -88,7 +91,7 @@ export class Snake {
     this.blocks.advanceHead(this.direction);
   }
 
-  advanceTail = () => {
-    this.blocks.advanceTail();
+  popTail = () => {
+    return this.blocks.advanceTail();
   }
 }

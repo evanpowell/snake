@@ -1,4 +1,4 @@
-class FoodBlock {
+export class Food {
   constructor() {
     this.prevBlock = {
       x: null,
@@ -16,5 +16,3 @@ class FoodBlock {
     this.currentBlock = block;
   }
 }
-
-export default Food;
