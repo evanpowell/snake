@@ -2,18 +2,22 @@ import { Snake } from './Snake';
 import { Food } from './Food';
 
 export class GameRunner {
-  constructor(config) {
-    this.lengthInBlocks = 40
+  constructor(config, gameOverCallBack) {
+    this.lengthInBlocks = 40;
     this.isWall = config.isWall;
     this.fullLength = config.canvas.width;
     this.blockSize = (config.canvas.width / this.lengthInBlocks) - 2; // Detract 1 pixel from each side for pixel padding
     this.speedInterval = [150, 100, 50][config.speed - 1];
+    this.endLoopInterval = [2300, 2000, 1700][config.speed - 1];
     this.snakeColor = config.snakeColor;
     this.foodColor = config.foodColor;
+    this.textColor = config.textColor;
     this.ctx = config.canvas.getContext('2d');
     this.incScore = config.incScore;
     this.snake = null;
     this.food = null;
+    this.endGameLoop = null;
+    this.gameOverCallBack = gameOverCallBack;
   }
 
   init = () => {
@@ -110,7 +114,7 @@ export class GameRunner {
     }
   }
 
-  renderSnakeBlock = (block) => {
+  renderSnakeBlock = (block, color = this.snakeColor) => {
     // render snakeblock based on its own direction and the direction of the next block
     const trueCoordinates = this.getTrueCoordinates(block);
     let width = this.blockSize;
@@ -138,7 +142,7 @@ export class GameRunner {
       }
     }
 
-    this.renderBlock(trueCoordinates.x, trueCoordinates.y, width, height, this.snakeColor);
+    this.renderBlock(trueCoordinates.x, trueCoordinates.y, width, height, color);
   }
 
   placeFood = (isInit) => {
@@ -182,6 +186,8 @@ export class GameRunner {
 
   getTrueCoordinates = (block) => {
     return {
+      // add 2px to blockSize to for true blockSize (without px padding) to get true location,
+      // then add 1px to each starting coordinate for px padding
       x: block.x * (this.blockSize + 2) + 1,
       y: block.y * (this.blockSize + 2) + 1
     };
@@ -207,6 +213,44 @@ export class GameRunner {
   }
 
   endGame = () => {
+    this.snake.blocks.removeHead();
+    
+    let interval = this.endLoopInterval / this.snake.blocks.length;
+    let color = this.textColor;
+    let counter, counterLimit = Math.floor(this.snake.blocks.length / 4);
+    let isFirstLoop = true;
+    let block = this.snake.blocks.head.prev;
 
+
+    this.renderSnakeBlock(this.snake.blocks.head, color);
+
+
+    this.endGameLoop = setInterval(() => {
+      if (counter < counterLimit) {
+        counter++;
+        return;
+      }
+
+      if (!block) {
+        if (isFirstLoop) {
+          this.gameOverCallBack();
+          isFirstLoop = false;
+        }
+        block = this.snake.blocks.head;
+        color = color === this.textColor ? this.snakeColor : this.textColor;
+        counter = 0;
+        return;
+      }
+
+      this.renderSnakeBlock(block, color);
+
+      block = block.prev;
+      
+    }, interval);
+
+  }
+
+  clearEndGameLoop = () => {
+    clearInterval(this.endGameLoop);
   }
 }

@@ -9,8 +9,9 @@ export class Game extends Component {
   }
 
   componentDidMount() {
-    const gameRunner = new GameRunner(this.props);
-    console.log(gameRunner);
+    const gameRunner = new GameRunner(this.props, () => {
+      console.log('game ended');
+    });
     gameRunner.init();
   }
 
@@ -38,6 +39,7 @@ const mapStateToProps = (state) => ({
   score: state.score,
   snakeColor: state.colors.snake,
   screenColor: state.colors.screen,
+  textColor: state.colors.text,
   foodColor: state.colors.food,
   canvas: state.canvas,
 });

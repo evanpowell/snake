@@ -1,4 +1,5 @@
 import { upKeys, downKeys, leftKeys, rightKeys } from '../constants/directionalKeys';
+import { timingSafeEqual } from 'crypto';
 
 export class SnakeBlock {
   constructor (x, y, direction) {
@@ -14,6 +15,7 @@ export class SnakeBlockList {
   constructor() {
     this.head = null;
     this.tail = null;
+    this.length = 0;
   }
 
   advanceHead = (direction) => {
@@ -42,6 +44,8 @@ export class SnakeBlockList {
     newHead.prev = this.head;
     this.head.next = newHead;
     this.head = newHead;
+
+    this.length++;
   }
 
   advanceTail = () => {
@@ -50,7 +54,15 @@ export class SnakeBlockList {
     this.tail = this.tail.next;
     this.tail.prev = null;
 
+    this.length--;
+
     return previousTail;
+  }
+
+  removeHead = () => {
+    this.head = this.head.prev;
+    this.head.next = null;
+    this.length--;
   }
 }
 
