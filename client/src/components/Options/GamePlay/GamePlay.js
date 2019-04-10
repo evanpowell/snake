@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 
 import { upKeys, downKeys, leftKeys, rightKeys } from '../../../constants/directionalKeys';
+
+import OptionLabel from '../../shared/OptionLabel';
 
 export class Gameplay extends Component {
   state = {
@@ -66,36 +67,21 @@ export class Gameplay extends Component {
       <div className="text-center h-100">
 
         <div className="menu menu__heading menu__heading--settings">
-          <h3 className="heading" style={{ color: this.props.textColor }}>Gameplay</h3>
+          <h3 className="heading">Gameplay</h3>
         </div>
 
         <div className="menu menu__options menu__options--settings">
 
-          <div className="option" style={{ color: this.props.textColor }}>
+          <div className="option">
 
-            <div className="option__label mb-4">
+            <OptionLabel
+              name="Wall"
+              id="wall"
+              handleFocus={this.handleFocus}
+              focusedOption={this.state.focusedOption}
+            />
 
-              <div 
-                className="option__active option__active--left"
-                style={{ backgroundColor: this.props.focusColor, display: this.state.focusedOption === 'wall' ? 'inline-block' : 'none' }}
-              ></div>
-
-              <h2
-                id="wall"
-                onFocus={this.handleFocus}
-                tabIndex="0"
-              >
-                Wall
-              </h2>
-
-              <div
-                className="option__active option__active--right"
-                style={{ backgroundColor: this.props.focusColor, display: this.state.focusedOption === 'wall' ? 'inline-block' : 'none' }}
-              ></div>
-
-            </div>
-
-            <div className="option__select">
+            <div className="option__select mt-4">
 
               <div className="option__select--input" style={this.props.isWall ? selectedStyle : {}}>
                 On
@@ -109,31 +95,16 @@ export class Gameplay extends Component {
 
           </div>
 
-          <div className="option" style={{ color: this.props.textColor }}>
+          <div className="option">
 
-            <div className="option__label mb-4">
+            <OptionLabel
+              name="Speed"
+              id="speed"
+              handleFocus={this.handleFocus}
+              focusedOption={this.state.focusedOption}
+            />
 
-              <div 
-                className="option__active option__active--left"
-                style={{ backgroundColor: this.props.focusColor, display: this.state.focusedOption === 'speed' ? 'inline-block' : 'none' }}
-              ></div>
-
-              <h2
-                id="speed"
-                onFocus={this.handleFocus}
-                tabIndex="0"
-              >
-                Speed
-              </h2>
-
-              <div
-                className="option__active option__active--right"
-                style={{ backgroundColor: this.props.focusColor, display: this.state.focusedOption === 'speed' ? 'inline-block' : 'none' }}
-              ></div>
-
-            </div>
-
-            <div className="option__select">
+            <div className="option__select mt-4">
 
               <div className="option__select--input" style={this.props.speed === 1 ? selectedStyle : {}}>
                 Slow
@@ -151,34 +122,16 @@ export class Gameplay extends Component {
 
           </div>
 
-          <div className="option" style={{ color: this.props.textColor }}>
+          <div className="option">
 
-            <div className="option__label mb-4">
-
-              <div 
-                className="option__active option__active--left"
-                style={{ backgroundColor: this.props.focusColor, display: this.state.focusedOption === 'back' ? 'inline-block' : 'none' }}
-              ></div>
-
-              <h2>
-                <Link
-                  to="/settings"
-                  className="router-link option__text"
-                  id="back"
-                  style={{ color: this.props.textColor }}
-                  onFocus={this.handleFocus}
-                >
-                  Back
-                </Link>
-              </h2>
-
-              <div
-                className="option__active option__active--right"
-                style={{ backgroundColor: this.props.focusColor, display: this.state.focusedOption === 'back' ? 'inline-block' : 'none' }}
-              ></div>
-
-            </div>
-
+            <OptionLabel
+              name="Back"
+              id="back"
+              link="/settings"
+              handleFocus={this.handleFocus}
+              focusedOption={this.state.focusedOption}
+            />
+            
           </div>
 
         </div>

@@ -31,6 +31,10 @@ h3 {
   font-size: 2rem;
 }
 
+a {
+  color: inherit;
+}
+
 #app {
   height: 100%;
 }
@@ -104,8 +108,10 @@ h3 {
 
 .router-link {
   display: block;
+  color: inherit;
 
   &:hover {
+    color: inherit;
     text-decoration: none;
   }
 }

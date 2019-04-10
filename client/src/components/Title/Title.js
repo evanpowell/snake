@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { upKeys, downKeys } from '../../constants/directionalKeys';
+
+import OptionLabel from '../shared/OptionLabel';
 
 export class Title extends Component {
   state = {
@@ -16,6 +17,11 @@ export class Title extends Component {
 
   componentWillUnmount() {
     document.body.removeEventListener('keydown', this.handleKeyDown);
+  }
+
+  clearScreen = () => {
+    const { canvas } = this.props;
+    canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
   }
 
   handleFocus = (event) => {
@@ -42,60 +48,23 @@ export class Title extends Component {
 
         <div className="menu menu__options menu__options--title">
 
-          <div className="option__label">
+          <OptionLabel
+            name="Start"
+            id="start"
+            link="/game"
+            handleFocus={this.handleFocus}
+            focusedOption={this.state.focusedOption}
+          />
 
-            <div 
-              className="option__active option__active--left"
-              style={{ backgroundColor: this.props.focusColor, display: this.state.focusedOption === 'start' ? 'inline-block' : 'none' }}
-            ></div>
-
-            <h2>
-              <Link
-                to="/game"
-                className="router-link option__text"
-                id="start"
-                style={{ color: this.props.menuColor }}
-                onFocus={this.handleFocus}
-              >
-                Start
-              </Link>
-            </h2>
-
-            <div
-              className="option__active option__active--right"
-              style={{ backgroundColor: this.props.focusColor, display: this.state.focusedOption === 'start' ? 'inline-block' : 'none' }}
-            ></div>
-
-          </div>
-
-          <div className="option__label">
-
-            <div
-              className="option__active option__active--left"
-              style={{ backgroundColor: this.props.focusColor, display: this.state.focusedOption === 'settings' ? 'inline-block' : 'none' }}
-            ></div>
-            
-            <h2>
-              <Link
-                to="/settings"
-                className="router-link option__text"
-                id="settings"
-                style={{ color: this.props.menuColor }}
-                onFocus={this.handleFocus}
-              >
-                Settings
-              </Link>
-            </h2>
-
-            <div
-              className="option__active option__active--right"
-              style={{ backgroundColor: this.props.focusColor, display: this.state.focusedOption === 'settings' ? 'inline-block' : 'none' }}
-            ></div>
-
-          </div>
+          <OptionLabel
+            name="Settings"
+            id="settings"
+            link="/settings"
+            handleFocus={this.handleFocus}
+            focusedOption={this.state.focusedOption}
+          />
 
         </div>
-
 
       </div>
     )
@@ -106,7 +75,8 @@ const mapStateToProps = (state) => {
   return {
     titleColor: state.colors.snake,
     focusColor: state.colors.food,
-    menuColor: state.colors.text
+    menuColor: state.colors.text,
+    canvas: state.canvas
   };
 };
 

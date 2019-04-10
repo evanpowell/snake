@@ -20,7 +20,7 @@ export class App extends Component {
 
   render() {
     return (
-      <div id="main" className="h-100 d-flex align-items-center" style={{ backgroundColor: this.props.colors.background }}>
+      <div id="main" className="h-100 d-flex align-items-center" style={{ backgroundColor: this.props.colors.background, color: this.props.colors.text }}>
         <div className="screen" style={{ backgroundColor: this.props.colors.wall }}>
           <div className="screen__container h-100">
             <div className="screen__inner h-100">

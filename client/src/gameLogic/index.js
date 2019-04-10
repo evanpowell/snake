@@ -252,6 +252,5 @@ export class GameRunner {
 
   clearEndGameLoop = () => {
     clearInterval(this.endGameLoop);
-    this.ctx.clearRect(0, 0, this.fullLength, this.fullLength);
   }
 }
