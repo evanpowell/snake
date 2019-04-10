@@ -10,7 +10,10 @@ export class Game extends Component {
 
   componentDidMount() {
     const gameRunner = new GameRunner(this.props, () => {
-      console.log('game ended');
+      console.log('endgame loop first iteration over');
+      setTimeout(() => {
+        gameRunner.clearEndGameLoop();
+      }, 2000);
     });
     gameRunner.init();
   }

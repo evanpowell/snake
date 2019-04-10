@@ -213,17 +213,18 @@ export class GameRunner {
   }
 
   endGame = () => {
+    document.removeEventListener('keydown', this.snake.handleDirectionKeyDown);
+
+    let color = this.textColor;
+    let isFirstLoop = true;
+
     this.snake.blocks.removeHead();
     
     let interval = this.endLoopInterval / this.snake.blocks.length;
-    let color = this.textColor;
     let counter, counterLimit = Math.floor(this.snake.blocks.length / 4);
-    let isFirstLoop = true;
     let block = this.snake.blocks.head.prev;
 
-
     this.renderSnakeBlock(this.snake.blocks.head, color);
-
 
     this.endGameLoop = setInterval(() => {
       if (counter < counterLimit) {
@@ -247,10 +248,10 @@ export class GameRunner {
       block = block.prev;
       
     }, interval);
-
   }
 
   clearEndGameLoop = () => {
     clearInterval(this.endGameLoop);
+    this.ctx.clearRect(0, 0, this.fullLength, this.fullLength);
   }
 }
