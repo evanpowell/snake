@@ -1,5 +1,9 @@
+require ('dotenv').config();
+
 const express = require('express');
 const path = require('path');
+
+const dbQuery = require('../db/queries');
 
 const PORT = process.env.PORT || 3000;
 
@@ -10,7 +14,29 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, '../client/dist')));
 
 app.get('/highscores', (req, res) => {
-  // query db for highscores based on wall and speed settings
+  const { isWall, speed } = req.query;
+
+  const settings = {
+    isWall: isWall === 'true',
+    speed: Number(speed)
+  }
+
+  // dbQuery.getHighScoresBySettings(req.query).then((highScores) => {
+  //   res.send(highScores);
+  // });
+});
+
+app.post('/highScore', (req, res) => {
+  // dbQuery.createHighScore(req.body).then(() => {
+  //   res.send('highScore successfuly created');
+  // });
+});
+
+app.delete('/highScore', (req, res) => {
+  const id = Number(req.query.id);
+  // dbQuery.deleteHighScore(req.params).then(() => {
+  //   res.send('highScore successfully deleted');
+  // });
 });
 
 app.get('/*', function(req, res) {
