@@ -76,6 +76,7 @@ export class GameOver extends Component {
 
 const mapStateToProps = (state, ownProps) => ({
   titleColor: state.colors.food,
+  screenColor: state.colors.screen,
   ...ownProps
 })
 

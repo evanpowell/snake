@@ -51,14 +51,14 @@ export class OptionLabel extends Component {
 
         <div 
           className="option__active option__active--left"
-          style={{ backgroundColor: this.props.focusColor, display: this.props.focusedOption === this.props.id ? 'inline-block' : 'none' }}
+          style={{ backgroundColor: this.props.textColor, display: this.props.focusedOption === this.props.id ? 'inline-block' : 'none' }}
         ></div>
 
         {text}
 
         <div
           className="option__active option__active--right"
-          style={{ backgroundColor: this.props.focusColor, display: this.props.focusedOption === this.props.id ? 'inline-block' : 'none' }}
+          style={{ backgroundColor: this.props.textColor, display: this.props.focusedOption === this.props.id ? 'inline-block' : 'none' }}
         ></div>
 
       </div>
@@ -67,8 +67,7 @@ export class OptionLabel extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  focusColor: state.colors.food,
-  menuColor: state.colors.text,
+  textColor: state.colors.text,
   ...ownProps
 });
 

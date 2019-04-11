@@ -68,6 +68,9 @@ a {
   height: 100%;
   z-index: 1;
 
+  &.canvas-gameover {
+    animation: partialFadeOut 2s linear forwards;
+  }
 }
 
 .menu {
@@ -166,10 +169,20 @@ a {
   }
 
   50% {
-    opacity: .3;
+    opacity: .5;
   }
 
   100% {
     opacity: 1;
+  }
+}
+
+@keyframes partialFadeOut {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: .3;
   }
 }

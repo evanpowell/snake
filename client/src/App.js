@@ -22,7 +22,7 @@ export class App extends Component {
     return (
       <div id="main" className="h-100 d-flex align-items-center" style={{ backgroundColor: this.props.colors.background, color: this.props.colors.text }}>
         <div className="screen" style={{ backgroundColor: this.props.colors.wall }}>
-          <div className="screen__container h-100">
+          <div className="screen__container h-100" style={{ backgroundColor: this.props.colors.screen }}>
             <div className="screen__inner h-100">
               <Router>
                 <Switch>
@@ -34,7 +34,7 @@ export class App extends Component {
                 </Switch>
               </Router>
             </div>
-            <canvas id="canvas" style={{ backgroundColor: this.props.colors.screen }}></canvas>
+            <canvas id="canvas"></canvas>
           </div>
         </div>
       </div>

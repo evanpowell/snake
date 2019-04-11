@@ -49,6 +49,8 @@ export class Game extends Component {
       isGameOver: true,
       isHighScore: this.isHighScore()
     });
+
+    this.props.canvas.classList.add('canvas-gameover');
   }
 
   playAgain = () => {
@@ -66,6 +68,7 @@ export class Game extends Component {
 
   clearScreen = () => {
     this.state.game.clearEndGameLoop();
+    this.props.canvas.classList.remove('canvas-gameover');
   }
 
   isHighScore = () => {
