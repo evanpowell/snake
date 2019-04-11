@@ -49,7 +49,7 @@ export class GameOver extends Component {
           <h1 style={{ color: this.props.titleColor }}>Game Over</h1>
         </div>
 
-        <div className="menu menu__options menu__options--title">
+        <div className="menu menu__options menu__options--title endgame-options">
 
           <OptionLabel
             name="Play Again"
