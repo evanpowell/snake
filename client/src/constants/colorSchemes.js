@@ -13,12 +13,12 @@ export const colorSchemes = {
   gameboy: {
     colorScheme: 'gameboy',
     colors: {
-      snake: '#6b8c42',
-      food: '#5a3921',
-      text: '#7bc67b',
-      screen: '#ffffb5',
+      snake: '#385d49',
+      food: '#2e463d',
+      text: '#638b50',
+      screen: '#a7ae1e',
       wall: '#6d6a75',
-      background: '#e2e3dd'
+      background: '#cdcfc4'
     }
   }
 }
