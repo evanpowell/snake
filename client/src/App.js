@@ -29,8 +29,8 @@ export class App extends Component {
                   <Route path="/" exact component={Title} />
                   <Route path="/game" exact component={Game} />
                   <Route path="/settings" exact component={Options} />
-                  <Route path="/settings/gameplay" component={Gameplay} />
-                  <Route path="/settings/display" component={Display} />
+                  <Route path="/settings/gameplay" exact component={Gameplay} />
+                  <Route path="/settings/display" exact component={Display} />
                 </Switch>
               </Router>
             </div>

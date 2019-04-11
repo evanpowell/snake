@@ -1,37 +1,91 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import axios from 'axios';
 
 import { GameRunner } from '../../gameLogic/index';
 
+import GameOver from '../GameOver/GameOver';
+
 export class Game extends Component {
   state = {
-
+    game: null,
+    isGameOver: false,
+    isHighScore: false,
+    highScores: []
   }
 
   componentDidMount() {
-    const gameRunner = new GameRunner(this.props, () => {
-      console.log('endgame loop first iteration over');
-    });
+    const gameRunner = new GameRunner(this.props, this.endGame);
+
     gameRunner.init();
+
+    this.setState({
+      game: gameRunner
+    });
+
+    this.getHighScores();
+  }
+
+  componentWillUnmount() {
+    this.clearScreen();
+    this.props.resetScore();
+  }
+
+  getHighScores = () => {
+    // const params = {
+    //   isWall: this.props.isWall,
+    //   speed: this.props.speed
+    // }
+
+    // axios.get('/highscores', { params }).then(({ data }) => {
+    //   this.setState({
+    //     highScores: data
+    //   });
+    // });
+  }
+
+  endGame = () => {
+    this.setState({
+      isGameOver: true,
+      isHighScore: this.isHighScore()
+    });
+  }
+
+  playAgain = () => {
+    this.clearScreen();
+
+    this.setState({
+      isGameOver: false,
+      isHighScore: false,
+    });
+
+    this.props.resetScore();
+
+    this.state.game.init();
+  }
+
+  clearScreen = () => {
+    this.state.game.clearEndGameLoop();
   }
 
   isHighScore = () => {
-
-  }
-
-  renderBlock = ({ x, y, width, height }, color) => {
-    this.props.ctx.fillStyle = color;
-    this.props.ctx.fillRect
-  }
-
-  checkBlock = (x1, y1, x2, y2) => {
-    return x1 === x2 && y1 === y2
+    // compare highscore with leaderboard
+    return false;
   }
 
   render() {
+    let endGameComponent = null;
+    if (this.state.isGameOver) {
+      endGameComponent = this.state.isHighScore ? null : (<GameOver playAgain={this.playAgain} />);
+    }
+
     return (
       <div>
-        
+        <div className="score">
+          Score: {this.props.score}
+        </div>
+
+        {endGameComponent}
       </div>
     )
   }

@@ -232,7 +232,9 @@ export class GameRunner {
         return;
       }
 
-      if (!block) {
+      this.renderSnakeBlock(block, color);
+
+      if (block === this.snake.blocks.tail) {
         if (isFirstLoop) {
           this.gameOverCallBack();
           isFirstLoop = false;
@@ -243,8 +245,6 @@ export class GameRunner {
         return;
       }
 
-      this.renderSnakeBlock(block, color);
-
       block = block.prev;
       
     }, interval);
@@ -252,5 +252,6 @@ export class GameRunner {
 
   clearEndGameLoop = () => {
     clearInterval(this.endGameLoop);
+    this.ctx.clearRect(0, 0, this.fullLength, this.fullLength);
   }
 }

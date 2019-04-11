@@ -153,6 +153,13 @@ a {
   }
 }
 
+.score {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translateY(calc(-100% - 1rem));
+}
+
 @keyframes flickerAnimation {
   0% { 
     opacity: 1;
