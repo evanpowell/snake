@@ -2,14 +2,11 @@ const TOGGLE_WALL = 'TOGGLE_WALL';
 const CHANGE_SPEED = 'CHANGE_SPEED';
 const CHANGE_COLORS = 'CHANGE_COLORS';
 const UPDATE_CANVAS = 'UPDATE_CANVAS';
-const UPDATE_CONTEXT = 'UPDATE_CONTEXT';
 const INCREASE_SCORE = 'INCREASE_SCORE';
 const RESET_SCORE = 'RESET_SCORE';
+const SET_HIGHSCORE = 'SET_HIGHSCORE';
 
 const initialState = {
-  highScores: {
-    
-  },
   isWall: true,
   speed: 2,
   colors: {
@@ -23,7 +20,9 @@ const initialState = {
   colorScheme: 'normal',
   canvas: null,
   context: null,
-  score: 0
+  score: 0,
+  isHighScore: false,
+  highScoreToDeleteId: null
 };
 
 export default (state = initialState, { type, payload }) => {
@@ -45,7 +44,10 @@ export default (state = initialState, { type, payload }) => {
     return { ...state, score: state.score + 1};
 
   case RESET_SCORE:
-    return { ...state, score: 0};
+    return { ...state, score: 0, isHighScore:false, highScoreToDeleteId: null };
+
+  case SET_HIGHSCORE:
+    return { ...state, isHighScore: true, highScoreToDeleteId: payload };
 
   default:
     return state;

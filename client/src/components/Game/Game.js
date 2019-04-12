@@ -10,11 +10,11 @@ export class Game extends Component {
   state = {
     game: null,
     isGameOver: false,
-    isHighScore: false,
-    highScores: []
+    highScores: [],
   }
 
   componentDidMount() {
+    this.props.resetScore();
     const gameRunner = new GameRunner(this.props, this.endGame);
 
     gameRunner.init();
@@ -28,27 +28,36 @@ export class Game extends Component {
 
   componentWillUnmount() {
     this.clearScreen();
-    this.props.resetScore();
   }
 
   getHighScores = () => {
-    // const params = {
-    //   isWall: this.props.isWall,
-    //   speed: this.props.speed
-    // }
+    const params = {
+      isWall: this.props.isWall,
+      speed: this.props.speed
+    }
 
-    // axios.get('/highscores', { params }).then(({ data }) => {
-    //   this.setState({
-    //     highScores: data
-    //   });
-    // });
+    axios.get('/highscores', { params }).then(({ data }) => {
+
+      const sortedAscendingHighScores = data.sort((a, b) => {
+        if (a.score === b.score) {
+          return a.created_at - b.created_at;
+        }
+        return a.score - b.score;
+      });
+
+      this.setState({
+        highScores: sortedAscendingHighScores
+      });
+
+    });
   }
 
   endGame = () => {
     this.setState({
       isGameOver: true,
-      isHighScore: this.isHighScore()
     });
+
+    this.determineHighScore();
 
     this.props.canvas.classList.add('canvas-gameover');
   }
@@ -58,7 +67,6 @@ export class Game extends Component {
 
     this.setState({
       isGameOver: false,
-      isHighScore: false,
     });
 
     this.props.resetScore();
@@ -71,24 +79,39 @@ export class Game extends Component {
     this.props.canvas.classList.remove('canvas-gameover');
   }
 
-  isHighScore = () => {
-    // compare highscore with leaderboard
-    return false;
+  determineHighScore = () => {
+    const { highScores } = this.state;
+    let isHighScore = false;
+    let recordIdToDelete = null;
+    if (this.props.score === 0) {
+      return;
+    }
+
+    if (highScores.length < 3) {
+      isHighScore = true;
+    } else {
+      for (let i = 0; i < highScores.length; i++) {
+        if (this.props.score > highScores[i].score) {
+          isHighScore = true;
+          recordIdToDelete = highScores[0].id;
+        }
+      }
+    }
+
+    if (isHighScore) {
+      this.props.setHighScore(recordIdToDelete);
+    }
   }
 
   render() {
-    let endGameComponent = null;
-    if (this.state.isGameOver) {
-      endGameComponent = this.state.isHighScore ? null : (<GameOver playAgain={this.playAgain} />);
-    }
-
     return (
       <div>
         <div className="score">
           Score: {this.props.score}
         </div>
 
-        {endGameComponent}
+        {this.state.isGameOver && <GameOver isHighScore={this.props.isHighScore} playAgain={this.playAgain} />}
+
       </div>
     )
   }
@@ -103,11 +126,13 @@ const mapStateToProps = (state) => ({
   textColor: state.colors.text,
   foodColor: state.colors.food,
   canvas: state.canvas,
+  isHighScore: state.isHighScore
 });
 
 const mapDispatchToProps = {
   incScore: () => ({ type: 'INCREASE_SCORE', payload: null }),
-  resetScore: () => ({ type: 'RESET_SCORE', payload: null })
+  resetScore: () => ({ type: 'RESET_SCORE', payload: null }),
+  setHighScore: (payload) => ({ type: 'SET_HIGHSCORE', payload })
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);

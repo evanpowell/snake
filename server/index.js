@@ -21,9 +21,9 @@ app.get('/highscores', (req, res) => {
     speed: Number(speed)
   }
 
-  // dbQuery.getHighScoresBySettings(req.query).then((highScores) => {
-  //   res.send(highScores);
-  // });
+  dbQuery.getHighScoresBySettings(req.query).then((highScores) => {
+    res.send(highScores);
+  });
 });
 
 app.post('/highScore', (req, res) => {
