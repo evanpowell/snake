@@ -8,10 +8,26 @@ mongoose.connect(`mongodb://${DB_USERNAME}:${DB_PW}@ds031915.mlab.com:31915/snak
 const db = mongoose.connection;
 
 const highScoreSchema = new Schema({
-  initials: String,
-  score: Number,
-  isWall: Boolean,
-  speed: Number
+  name: {
+    type: String,
+    required: true
+  },
+  score: {
+    type: Number,
+    required: true
+  },
+  isWall: {
+    type: Boolean,
+    required: true
+  },
+  speed: {
+    type: Number,
+    required: true
+  },
+  created_at: {
+    type: Date,
+    default: Date.now
+  }
 });
 
 const HighScore = mongoose.model('highscores', highScoreSchema);
