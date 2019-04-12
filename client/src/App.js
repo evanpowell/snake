@@ -7,6 +7,7 @@ import Options from './components/Options/Options';
 import Gameplay from './components/Options/Gameplay/Gameplay';
 import Display from './components/Options/Display/Display';
 import Game from './components/Game/Game';
+import HighScoreEntry from './components/HighScoreEntry/HighScoreEntry';
 
 export class App extends Component {
   componentDidMount() {
@@ -27,10 +28,11 @@ export class App extends Component {
               <Router>
                 <Switch>
                   <Route path="/" exact component={Title} />
-                  <Route path="/game" exact component={Game} />
+                  <Route path="/game" component={Game} />
                   <Route path="/settings" exact component={Options} />
                   <Route path="/settings/gameplay" exact component={Gameplay} />
                   <Route path="/settings/display" exact component={Display} />
+                  <Route path="/highscore-entry" exact component={HighScoreEntry} />
                 </Switch>
               </Router>
             </div>
