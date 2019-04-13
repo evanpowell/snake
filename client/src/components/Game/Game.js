@@ -93,7 +93,8 @@ export class Game extends Component {
       for (let i = 0; i < highScores.length; i++) {
         if (this.props.score > highScores[i].score) {
           isHighScore = true;
-          recordIdToDelete = highScores[0].id;
+          recordIdToDelete = highScores[0]._id;
+          console.log('recordIdToDelete', recordIdToDelete);
         }
       }
     }

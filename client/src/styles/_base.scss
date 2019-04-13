@@ -60,6 +60,13 @@ a {
   }
 }
 
+@media(min-width: 700px) {
+  .screen {
+    width: 62rem;
+    height: 62rem;
+  }
+}
+
 #canvas {
   position: absolute;
   top: 0;
@@ -76,6 +83,8 @@ a {
 .menu {
   position: absolute;
   width: 100%;
+  padding-right: 4rem;
+  padding-left: 4rem;
 
   &__heading {
     top: 0;
@@ -87,8 +96,16 @@ a {
       height: 50%
     }
 
-    &--settings {
+    &--settings, &--leaderboard {
       height: 20%;
+    }
+
+    &--highscore-entry {
+      height: 40%;
+
+      & h1 {
+        font-size: 2.2rem;
+      }
     }
   }
 
@@ -103,13 +120,31 @@ a {
       height: 50%;
     }
 
-    &--settings {
+    &--settings, &--leaderboard {
       height: 80%;
     }
 
     &.endgame-options {
       opacity: 0;
       animation: fadeIn 1s linear 1s forwards;
+    }
+
+    &--highscore-entry {
+      height: 60%;
+
+      & .input-div {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 10rem;
+      }
+
+      & .highscore-input {
+        text-align: center;
+        background: none;
+        border: none;
+        font-size: 2rem;
+      }
     }
   }
 }

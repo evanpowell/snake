@@ -19,7 +19,7 @@ const createHighScore = ((highScore) => {
 
 const deleteHighScore = ((scoreId) => {
   return new Promise((resolve, reject) => {
-    const query = HighScore.deleteOne({ id: scoreId });
+    const query = HighScore.deleteOne({ _id: scoreId });
     query.exec((err) => {
       if (err) {
         reject(err);

@@ -27,16 +27,17 @@ app.get('/highscores', (req, res) => {
 });
 
 app.post('/highScore', (req, res) => {
-  // dbQuery.createHighScore(req.body).then(() => {
-  //   res.send('highScore successfuly created');
-  // });
+  dbQuery.createHighScore(req.body).then(() => {
+    res.send('highScore successfuly created');
+  });
 });
 
 app.delete('/highScore', (req, res) => {
-  const id = Number(req.query.id);
-  // dbQuery.deleteHighScore(req.params).then(() => {
-  //   res.send('highScore successfully deleted');
-  // });
+  const id = req.query.id;
+  
+  dbQuery.deleteHighScore(id).then(() => {
+    res.send('highScore successfully deleted');
+  });
 });
 
 app.get('/*', function(req, res) {

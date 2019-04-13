@@ -8,6 +8,7 @@ import Gameplay from './components/Options/Gameplay/Gameplay';
 import Display from './components/Options/Display/Display';
 import Game from './components/Game/Game';
 import HighScoreEntry from './components/HighScoreEntry/HighScoreEntry';
+import LeaderBoard from './components/LeaderBoard/LeaderBoard';
 
 export class App extends Component {
   componentDidMount() {
@@ -33,6 +34,7 @@ export class App extends Component {
                   <Route path="/settings/gameplay" exact component={Gameplay} />
                   <Route path="/settings/display" exact component={Display} />
                   <Route path="/highscore-entry" exact component={HighScoreEntry} />
+                  <Route path="/leaderboard" exact component={LeaderBoard} />
                 </Switch>
               </Router>
             </div>
