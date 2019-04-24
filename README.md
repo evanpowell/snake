@@ -3,7 +3,7 @@ The classic snake game, with some additional features:
 
 - three settings for speed
 - optional wall setting
-- leaderboards for the top 5 scores for each setting variation
+- leaderboards for the top 3 scores for each setting variation
 - customizable color themes
 
 ### Tech Stack
